@@ -9,3 +9,11 @@ pytz==2017.2
 six==1.10.0
 tzlocal==1.4
 Werkzeug==0.12.2
+jsonschema==2.6.0
+numpy==1.12.1
+pandas==0.20.1
+pep8==1.7.0
+psycopg2==2.7.1
+pycurl==7.43.0
+requests==2.14.2
+SQLAlchemy==1.1.9
