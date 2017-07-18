@@ -23,7 +23,7 @@ def insertData(data):
 		# Build an insert statement for the data table: stmt
 		stmt = insert(busdata)
 		# Execute stmt with the values_list: results
-		results = connection.execute(stmt, parsed_json)
+		results = connection.execute(stmt, data)
 		# Print rowcount
 		print(results.rowcount)
 
