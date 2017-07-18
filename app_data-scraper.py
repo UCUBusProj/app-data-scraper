@@ -25,7 +25,7 @@ def insertData(data):
 		# Execute stmt with the values_list: results
 		results = connection.execute(stmt, data)
 		# Print rowcount
-		print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z') + " rows inserted: " results.rowcount)
+		print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z') + " rows inserted: " + str(results.rowcount))
 
 def hello():
 	codes = ['LAD|712988','LAD|712991','LAD|713002','LAD|713010','LAD|1054553','LAD|949921','LAD|1723724','LAD|1527114']
