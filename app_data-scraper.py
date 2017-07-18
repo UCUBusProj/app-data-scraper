@@ -4,7 +4,7 @@ import time
 import json
 import sqlalchemy
 from sqlalchemy import insert, MetaData, Table
-	
+from datetime import datetime, timezone
 
 def getEngine(user, password, db, host='ec2-107-22-162-158.compute-1.amazonaws.com', port=5432):
     '''Returns a connection and a metadata object'''
@@ -25,7 +25,7 @@ def insertData(data):
 		# Execute stmt with the values_list: results
 		results = connection.execute(stmt, data)
 		# Print rowcount
-		print(results.rowcount)
+		print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z') + " rows inserted: " results.rowcount)
 
 def hello():
 	codes = ['LAD|712988','LAD|712991','LAD|713002','LAD|713010','LAD|1054553','LAD|949921','LAD|1723724','LAD|1527114']
@@ -38,14 +38,12 @@ def hello():
 			for idx, dic in enumerate(data[code]):
 				data[code][idx] = {k.lower(): v for k, v in dic.items()}
 			insertData(data[code])
-			
-	return str(data)
 
 sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
-    print(hello())
+	hello()
 
 sched.start()
 
