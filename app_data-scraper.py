@@ -2,6 +2,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import urllib.request
 import time
 import json
+import sqlalchemy
 from sqlalchemy import insert, MetaData, Table
 	
 
@@ -42,7 +43,7 @@ def hello():
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=2)
+@sched.scheduled_job('interval', minutes=1)
 def timed_job():
     print(hello())
 
