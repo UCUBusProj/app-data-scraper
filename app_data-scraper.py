@@ -25,7 +25,7 @@ def insertData(data, connection, busdata):
 
 def hello():
 	connection, busdata = connect()
-    url = environ.get('ROUTE_URL')
+	url = environ.get('ROUTE_URL')
 	codes = ['LAD|712988','LAD|712991','LAD|713002','LAD|713010','LAD|1054553','LAD|949921','LAD|1723724','LAD|1527114']
 	#code = 'LAD|712988'
 	data = {}
