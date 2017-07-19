@@ -38,7 +38,7 @@ def hello():
 			data[code] = json.loads(response.read().decode('utf-8').replace('"[', '[').replace(']"', ']').replace('\\"', '"'))
 			for idx, dic in enumerate(data[code]):
 				data[code][idx] = {k.lower(): v for k, v in dic.items()}
-        insertData(data[code], connection, busdata)
+			insertData(data[code], connection, busdata)
 	connection.close()
 
 sched = BlockingScheduler()
