@@ -20,9 +20,9 @@ def connect(user, password, db, host='ec2-107-22-162-158.compute-1.amazonaws.com
 
 def insertData(data, connection, busdata):
     # Build an insert statement for the data table: stmt
-    stmt = insert(busdata)
+	stmt = insert(busdata)
     # Execute stmt with the values_list: results
-    results = connection.execute(stmt, data)
+	results = connection.execute(stmt, data)
     # Print rowcount
 	return results.rowcount
 
