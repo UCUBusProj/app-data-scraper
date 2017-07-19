@@ -33,10 +33,10 @@ def hello():
 	#code = 'LAD|712988'
 	data = {}
 	for code in codes:
-		time.sleep(4) 
+		time.sleep(4)
 		time1 = datetime.utcnow()
 		with urllib.request.urlopen('http://82.207.107.126:13541/SimpleRide/LAD/SM.WebApi/api/RouteMonitoring/?code='+code) as response:
-		time2 = datetime.utcnow()
+			time2 = datetime.utcnow()
 			data[code] = json.loads(response.read().decode('utf-8').replace('"[', '[').replace(']"', ']').replace('\\"', '"'))
 			for idx, dic in enumerate(data[code]):
 				data[code][idx] = {k.lower(): v for k, v in dic.items()}
