@@ -45,7 +45,7 @@ def hello():
 				rcnt = insertData(data[code], connection, busdata)
 			time3 = datetime.utcnow()
 			print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z')+' Request time: '+str((time2-time1).seconds) + 's'+' DB time: '+str((time3-time2).seconds) + 's'+' row insert: ' + str(rcnt))
-		except sqlalchemy.exc.OperationalError e:
+		except sqlalchemy.exc.OperationalError as e:
 			print('Exc: ', e)
 		except:
 			print('Exc: Some else error')
