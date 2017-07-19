@@ -5,13 +5,10 @@ import json
 import sqlalchemy
 from sqlalchemy import insert, MetaData, Table
 from datetime import datetime, timezone
+from os import environ
 
-def connect(user, password, db, host='ec2-107-22-162-158.compute-1.amazonaws.com', port=5432):
-    '''Returns a connection and a metadata object'''
-    # We connect with the help of the PostgreSQL URL
-    url = 'postgresql://{}:{}@{}:{}/{}'
-    url = url.format(user, password, host, port, db)
-    # The return value of create_engine() is our connection object
+def connect():
+    url = environ.get('DATABASE_URL')
     eng = sqlalchemy.create_engine(url, client_encoding='utf8')
     meta = MetaData(eng)
     busdata = Table('busdata', meta, autoload=True, autoload_with=eng)
@@ -21,14 +18,14 @@ def connect(user, password, db, host='ec2-107-22-162-158.compute-1.amazonaws.com
 def insertData(data, connection, busdata):
     # Build an insert statement for the data table: stmt
 	stmt = insert(busdata)
-    # Execute stmt with the values_list: results
+    # Execute stmt with the values_list: data
 	results = connection.execute(stmt, data)
-    # Print rowcount
+    # Return rowcount
 	return results.rowcount
 
 def hello():
-	connection, busdata = connect('kdindhqkbfhvki', 'd95183fae29ec029684cdd9d25982535f1411d512974ff5ad14522118af26c47', 'dfg9jl6m1s681v')
-    
+	connection, busdata = connect()
+    url = environ.get('ROUTE_URL')
 	codes = ['LAD|712988','LAD|712991','LAD|713002','LAD|713010','LAD|1054553','LAD|949921','LAD|1723724','LAD|1527114']
 	#code = 'LAD|712988'
 	data = {}
@@ -37,7 +34,7 @@ def hello():
 		time1 = datetime.utcnow()
 		time2 = datetime.utcnow()
 		try:
-			with urllib.request.urlopen('http://82.207.107.126:13541/SimpleRide/LAD/SM.WebApi/api/RouteMonitoring/?code='+code) as response:
+			with urllib.request.urlopen(url+code) as response:
 				time2 = datetime.utcnow()
 				data[code] = json.loads(response.read().decode('utf-8').replace('"[', '[').replace(']"', ']').replace('\\"', '"'))
 				for idx, dic in enumerate(data[code]):
