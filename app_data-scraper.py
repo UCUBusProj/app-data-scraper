@@ -43,7 +43,7 @@ def hello():
 				data[code][idx] = {k.lower(): v for k, v in dic.items()}
 			rcnt = insertData(data[code], connection, busdata)
 		time3 = datetime.utcnow()
-		print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z')+' Request time: '+str((time2-time1).seconds) + 's'+' DB time: '+str((time3-time2).seconds) + 's'+' row insert: 1 + str(rcnt))
+		print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z')+' Request time: '+str((time2-time1).seconds) + 's'+' DB time: '+str((time3-time2).seconds) + 's'+' row insert: ' + str(rcnt))
 	connection.close()
 
 sched = BlockingScheduler()
