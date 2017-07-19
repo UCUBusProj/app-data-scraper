@@ -36,14 +36,19 @@ def hello():
 		time.sleep(4)
 		time1 = datetime.utcnow()
 		time2 = datetime.utcnow()
-		with urllib.request.urlopen('http://82.207.107.126:13541/SimpleRide/LAD/SM.WebApi/api/RouteMonitoring/?code='+code) as response:
-			time2 = datetime.utcnow()
-			data[code] = json.loads(response.read().decode('utf-8').replace('"[', '[').replace(']"', ']').replace('\\"', '"'))
-			for idx, dic in enumerate(data[code]):
-				data[code][idx] = {k.lower(): v for k, v in dic.items()}
-			rcnt = insertData(data[code], connection, busdata)
-		time3 = datetime.utcnow()
-		print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z')+' Request time: '+str((time2-time1).seconds) + 's'+' DB time: '+str((time3-time2).seconds) + 's'+' row insert: ' + str(rcnt))
+		try:
+			with urllib.request.urlopen('http://82.207.107.126:13541/SimpleRide/LAD/SM.WebApi/api/RouteMonitoring/?code='+code) as response:
+				time2 = datetime.utcnow()
+				data[code] = json.loads(response.read().decode('utf-8').replace('"[', '[').replace(']"', ']').replace('\\"', '"'))
+				for idx, dic in enumerate(data[code]):
+					data[code][idx] = {k.lower(): v for k, v in dic.items()}
+				rcnt = insertData(data[code], connection, busdata)
+			time3 = datetime.utcnow()
+			print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f %Z%z')+' Request time: '+str((time2-time1).seconds) + 's'+' DB time: '+str((time3-time2).seconds) + 's'+' row insert: ' + str(rcnt))
+		except sqlalchemy.exc.OperationalError e:
+			print('Exc: ', e)
+		except:
+			print('Exc: Some else error')
 	connection.close()
 
 sched = BlockingScheduler()
