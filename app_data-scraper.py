@@ -9,7 +9,7 @@ from os import environ
 
 def connect():
     url = environ.get('DATABASE_URL')
-    eng = sqlalchemy.create_engine(url, client_encoding='utf8', pool_size=1, pool_owerflow=0, pool_recycle=60, pool_timeout=60)
+    eng = sqlalchemy.create_engine(url, client_encoding='utf8', pool_size=1, max_owerflow=0, pool_recycle=60, pool_timeout=60)
     meta = MetaData(eng)
     busdata = Table('busdata', meta, autoload=True, autoload_with=eng)
     connection = eng.connect()
@@ -30,7 +30,7 @@ def hello():
 	#code = 'LAD|712988'
 	data = {}
 	for code in codes:
-		time.sleep(6)
+		time.sleep(4)
 		time1 = datetime.utcnow()
 		time2 = datetime.utcnow()
 		try:
