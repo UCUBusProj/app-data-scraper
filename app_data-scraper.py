@@ -13,7 +13,7 @@ def connect():
     meta = MetaData(eng)
     busdata = Table('busdata', meta, autoload=True, autoload_with=eng)
     connection = eng.connect()
-    return connection, busdata
+    return connection, busdata, eng
 
 def insertData(data, connection, busdata):
     # Build an insert statement for the data table: stmt
@@ -24,7 +24,7 @@ def insertData(data, connection, busdata):
 	return results.rowcount
 
 def hello():
-	connection, busdata = connect()
+	connection, busdata, eng = connect()
 	url = environ.get('ROUTE_URL')
 	codes = ['LAD|712988','LAD|712991','LAD|713002','LAD|713010','LAD|1054553','LAD|949921','LAD|1723724','LAD|1527114']
 	#code = 'LAD|712988'
@@ -47,6 +47,7 @@ def hello():
 		except:
 			print('Exc: Some else error')
 	connection.close()
+	eng.dispose()
 
 sched = BlockingScheduler()
 
