@@ -9,7 +9,7 @@ from os import environ
 
 def connect():
     url = environ.get('DATABASE_URL')
-    eng = sqlalchemy.create_engine(url, client_encoding='utf8', pool_size=1, max_owerflow=0, pool_recycle=60, pool_timeout=60)
+    eng = sqlalchemy.create_engine(url, client_encoding='utf8', pool_size=1, max_overflow=0, pool_recycle=60, pool_timeout=60)
     meta = MetaData(eng)
     busdata = Table('busdata', meta, autoload=True, autoload_with=eng)
     connection = eng.connect()
